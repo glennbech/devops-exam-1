@@ -16,9 +16,12 @@ s3_client = boto3.client('s3', region_name='eu-west-1')
 rekognition_client = boto3.client('rekognition', region_name='eu-west-1')
 
 # Oppgave 1A
-BUCKET_NAME = "kjellsimagebucker"
+BUCKET_NAME = os.environ.get('BUCKET_NAME')
 
 def lambda_handler(event, context):
+    # Checks if variable for bucket is set
+    if not BUCKET_NAME:
+        raise ValueError("Du har ikke satt mijøvariablen for bucket name")
 
     # List all objects in the S3 bucket
     paginator = s3_client.get_paginator('list_objects_v2')
