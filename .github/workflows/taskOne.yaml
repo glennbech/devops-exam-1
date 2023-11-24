@@ -1,4 +1,4 @@
-name: ECR Push
+name: task2
 
 on:
   push:
@@ -6,33 +6,20 @@ on:
       - main
 
 jobs:
-  build_and_push:
+  push_to_registry:
+    name: Push Docker image to ECR
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Check out the repo
+        uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: Login to Docker Hub
-      run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
-    - name: Build and push Docker image
-      run: |
-        COMMIT_HASH=$(git rev-parse --short=7 ${{ github.sha }})
-        IMAGE_TAG="${COMMIT_HASH}"
-
-        docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name:$IMAGE_TAG -t ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name:latest . --push
-
-    - name: Login to AWS ECR
-      run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-
-    - name: Tag and push image to ECR
-      if: github.ref == 'refs/heads/main'
-      run: |
-        COMMIT_HASH=$(git rev-parse --short=7 ${{ github.sha }})
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/yoda:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/2009-jams:$COMMIT_HASH
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/2009-jams:$COMMIT_HASH
+      - name: Build and push Docker image
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 244530008913.dkr.ecr.eu-west-1.amazonaws.com
+          rev=$(git rev-parse --short HEAD)
+          docker build . -t jams-from-2009 
+          docker tag 244530008913.dkr.ecr.eu-west-1.amazonaws.com/2009-jams:$rev
+          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/2009-jams:$rev
