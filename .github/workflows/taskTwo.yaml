@@ -50,7 +50,7 @@ jobs:
       - name: terraform plan
         id: plan
         working-directory: ./infra
-        run: terraform plan -var="prefix=$PREFIX" -var="aws_id=$AWS_ID" -var="image=$IMAGE" -no-color
+        run: terraform plan -var="aws_id=$AWS_ID" -var="image=$IMAGE" -var="prefix=$PREFIX" 
         continue-on-error: true
         
       - name: terraform plan status
