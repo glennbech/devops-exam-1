@@ -1,9 +1,5 @@
-# iam.tf
-resource "aws_iam_role" "role_for_apprunner_service" {
-  name               = "${var.prefix}-iam-role"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-}
-
+# Synes det ga mer mening å ha alt som hadde med IAM å gjøre i en fil
+# istedet for å splitte det i en iam.tf og en data.tf
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
@@ -35,6 +31,10 @@ data "aws_iam_policy_document" "policy" {
     actions   = ["cloudwatch:*"]
     resources = ["*"]
   }
+}
+resource "aws_iam_role" "role_for_apprunner_service" {
+  name               = "${var.prefix}-iam-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_policy" "policy" {
