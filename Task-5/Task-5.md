@@ -101,4 +101,15 @@ selvom begge metologiene vil nyte en generell bedre kodevalitet enn uten, vil De
 et mer robust og pålitelig system fordi det blant annet ikke er avhenging av manuell testing som innbærer den menneskelige faktoren. 
 
 ## C
-fuck as jeg tror jeg skriver for mye....
+### Selv om jeg ikke klarte å gjennomføre oppgave 4, "feedback", har jeg tanker om hvordan og hvorfor en vil gjøre det.
+
+
+Når en har laget den nye funskjonaliteten er det vikitg å kunne klart definere hva intensjonen til den er, om den faktisk gjør noe nyttig som vil bedre systemet.
+Når en har gjort dette er det lettere å sette opp metrics for systemet, disse skal da måle deffinerte aspekter fra ny funskjonalitet. I tillegg er det fint å legge
+til overvåkningalarmer som kan gi deg beskjed om noe uventet skjer med systemet mens det kjører, som feks. "overload" på systemet, da vil systemet være mer sikkert
+når en blir varslet med en gang ting får galt. Å skape metrics er verdigfult for CI og CD, men kan også være nyttig for bedriten selv, da en feks kan bruke metrics 
+til å se hvor ofte den nye funskjoaliteten blir brukt av brukere. Under prossesen vil vi bruke CI og CD for å raskt disturbere de nye oppdateringene til systemet, 
+dette innbærer å automatisere tester slik at en kan sikre kompatibilitet med tidligere funsjonalitet. Etter du har satt opp metrics vil en ha en form for 
+visualisering av dataen, og en må sette opp et Terraform dashboard og vise de mest relevant metric-ene, dette steget gjør det enklere for flere medlemmer av 
+prosjektet å følge med på driften av systemet. Til slutt er det også flott å ha en mulighet for å få tilbakemeldinger ang. den nye funsjonaliteten, da dette sikrer
+at produktet passer behovet til en bruker.
