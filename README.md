@@ -7,11 +7,12 @@ Hvis du er i tvil på hvor du legger det til er det under
 Settings->Secrets and variables->Actions->New repository secret
 
 Navn på de to nødvendig secret-ene:
-´´´
+
+```shell
 AWS_ACCESS_KEY_ID
 
 AWS_SECRET_ACCESS_KEY
-´´´
+```
 
 Hver av disse skal være et Actions Secret Name og du må fylle ut selve secret-en
 med dine egene "credentials". Disse finner du inne i din egen AWS console ved å
@@ -19,6 +20,9 @@ trykke på:
 Brukeren din oppe i høyre hjørnet -> Security Credential
 Da skal det bare være å scrolle ned til Access keys og trykke "create access key"
 hvis du ikke allerede har en tilgjengelig.
+
+I tillegg må du endre --stack name på linje 25 i task1.yaml til noe unikt. Denne filen ligger under
+.github/workflows/task1.yaml
 
 Da skal Github Actions fungere som det skal hos deg!
 
@@ -39,8 +43,12 @@ Gitt at din AWS ID er den sammme som min; 244530008913, er det ingenting du tren
 Jeg antar at du har den samme da Github Actions ikke hadde fungert i Oppgave 2 hvis ikke, og annet
 er ikke spesifisert noe ang dette i oppgaven.
 
+Men hvis for all formd
+
 ## Oppgave 4
+
+Laget et dashboard i terraform og en MetricConfig klasse, men kommer ikke lengre denne gang
 
 ## Oppgave 5
 
-Ligger i mappen Task5
+Ligger i mappen Task-5
