@@ -39,27 +39,27 @@ jobs:
       IMAGE: 244530008913.dkr.ecr.eu-west-1.amazonaws.com/2009-jams:latest
     
     if: github.ref == 'ref/heads/main' && github.event_name == 'push'
-      steps:
-      - uses: actions/checkout@v3
-      - name: setup terraform
-        uses: hashicorp/setup-terraform@v2
+    steps:
+    - uses: actions/checkout@v3
+    - name: setup terraform
+      uses: hashicorp/setup-terraform@v2
         
-      - name: initialize terraform
-        id: init
-        working-directory: ./infra
-        run: terraform init
+    - name: initialize terraform
+      id: init
+      working-directory: ./infra
+      run: terraform init
         
-      - name: terraform plan
-        id: plan
-        working-directory: ./infra
-        run: terraform plan -var="aws_id=$AWS_ID" -var="image=$IMAGE" -var="prefix=$PREFIX" 
-        continue-on-error: true
+    - name: terraform plan
+      id: plan
+      working-directory: ./infra
+      run: terraform plan -var="aws_id=$AWS_ID" -var="image=$IMAGE" -var="prefix=$PREFIX" 
+      continue-on-error: true
         
-      - name: terraform plan status
-        if: steps.plan.outcome == 'failure'
-        working-directory: ./infra
-        run: exit 1
+    - name: terraform plan status
+      if: steps.plan.outcome == 'failure'
+      working-directory: ./infra
+      run: exit 1
         
-      - name: terraform apply
-        working-directory: ./infra
-        run: terraform apply -var="aws_id=$AWS_ID" -var="image=$IMAGE" -var="prefix=$PREFIX" --auto-approve
+    - name: terraform apply
+      working-directory: ./infra
+      run: terraform apply -var="aws_id=$AWS_ID" -var="image=$IMAGE" -var="prefix=$PREFIX" --auto-approve
