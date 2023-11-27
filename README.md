@@ -21,7 +21,7 @@ Brukeren din oppe i høyre hjørnet -> Security Credential
 Da skal det bare være å scrolle ned til Access keys og trykke "create access key"
 hvis du ikke allerede har en tilgjengelig.
 
-I tillegg må du endre --stack name på linje 25 i task1.yaml til noe unikt. Denne filen ligger under
+I tillegg må du endre ´´´--stack name´´´ på linje 24 i task1.yaml til noe unikt. Denne filen ligger under
 .github/workflows/task1.yaml
 
 Da skal Github Actions fungere som det skal hos deg!
@@ -39,11 +39,7 @@ Gitt at Github Actions fungerte på forrige oppgave skal denne også fungere ute
 
 ## Oppgave 3
 
-Gitt at din AWS ID er den sammme som min; 244530008913, er det ingenting du trenger å forandre.
-Jeg antar at du har den samme da Github Actions ikke hadde fungert i Oppgave 2 hvis ikke, og annet
-er ikke spesifisert noe ang dette i oppgaven.
-
-Men hvis for all formd
+Gitt at Github Actions fungerte på forrige oppgave skal denne også fungere uten tiltak.
 
 ## Oppgave 4
 
