@@ -64,9 +64,9 @@ jobs:
         
     - name: terraform plan status
       if: github.ref == 'ref/heads/main' && github.event_name == 'push'
-      if: steps.plan.outcome == 'failure'
-      working-directory: ./infra
-      run: exit 1
+        if: steps.plan.outcome == 'failure'
+        working-directory: ./infra
+        run: exit 1
         
     - name: terraform apply
       if: github.ref == 'ref/heads/main' && github.event_name == 'push'
