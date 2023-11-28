@@ -12,7 +12,7 @@ Dette gjør at en kan sjekke forskjellige bøtter uten å måtte endre på koden
 
 Jeg setter task1.yaml som mit github acions fil og passer på at jeg er under
 riktig mappe altså ./kjell og at github vil ha tilgang til alle de teknologiene
-som er i bruk som; SAM og python, samt checkout for å hente koden fra github repoet.
+som er i bruk som; SAM og python, og henter ut koden fra git repo-et med checkout@v2.
 I tillegg har jeg lagt med configure-aws-credentials for å ha tilgang til AWS 
 gjennom github. Så legger jeg inn linjer for å angi AWS credentials, for å angi
 aws-access-id og aws-secret-access-key velger jeg å bruke Github secrets av 
@@ -93,12 +93,35 @@ for å bygge et mindere bilde og jeg kopierer det bildet fra /app/target,
 som ble bygget under det første steget. For å så velge hvor det bildet
 fra steg to skal havne; /app/application.jar
 
-Til slutt ekponerer jeg port 8080, for å dokumentere hvilken port som er
-ment til å brukes og spesifiserer hvilket jar fil som skal kjøres med java.
+Til slutt ekponerer jeg port 8080 (som egentlig ikke er nødvendig), for å dokumentere 
+hvilken port som er ment til å brukes og spesifiserer hvilket jar fil som skal kjøres med java.
 
 ## 2B
 
-
+I task2.yaml, som ikke er et flott navn på en yaml fil, starter jeg med å defienere
+en job som jeg kaller push_to_regitry. Poenget med denne jobben er å bygge og push-e et docker
+bilde til ECR. Jobben bestpr av tre steps:
+* Jeg sier at den skal kjøre på den nyeste versjonen av ubuntu og henter ut koden 
+fra github repo-et med checkout@v2
+* Bygging av docker bilde. Her bruker jeg samme miljøvariabler som i oppgave 1A for å ha tilgang
+å kunne kjøre Dockerfilen jeg lagde i oppgave 1B. Så kjører vi kommandoen
+```Shell
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 244530008913.dkr.ecr.eu-west-1.amazonaws.com
+rev=$(git rev-parse --short HEAD)
+````
+for å autentisere docker med AWS ECR, vi henter også ut den korte versjonen av commit hash-en og lagrer den i
+variablen "rev" som vi skal bruke til å tag-e docker bildet i senere i dette steget.
+Så bygger vi bildet og kaller den: task 2. For å derretter tagget den med git hash-en vi tok 
+vare på og tagger den også med "latest" da dette var et av kravene til oppgaven.
+```Shell
+docker tag task2:latest 244530008913.dkr.ecr.eu-west-1.amazonaws.com/2009-jams:$rev
+docker tag task2:latest 244530008913.dkr.ecr.eu-west-1.amazonaws.com/2009-jams:latest
+```
+* Det siste steget Push-er Docker bilde til ECR og grunnen til at det er i et eget
+steg er fordi dette skal kunn skje hvis commiten blir push-et til main branch-en. 
+Steget starter altså med en if statement som sier at koden under kunn skal kjøres hvis dette
+er et push til main-branch. Hvis dette kriteriet stemmer kjører steget docker kommandoen push
+for å sende docker bildet til ECR registeret.
 
 ### Kommandoer for å starte en docker container
 ```shell
