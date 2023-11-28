@@ -179,6 +179,8 @@ vi kommer til det siste steget.
 ikke få feilmelding, men i tillegg har dette steget en sjekk for om vi er på main branch. 
 Terraform apply vil alstå ikke kjøre hvis vi er på en annen branch og jobben vil avslutte.
 
+Navnet på filen ble også endret til taskTwoAndThree.yaml...
+
 For neste del av oppgaven måtte vi sette opp en provider.tf og jeg fulgte en tidligere 
 leksjon i dette faget for å sette den opp. 
 
