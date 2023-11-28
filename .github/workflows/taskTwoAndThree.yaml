@@ -1,4 +1,4 @@
-name: task2
+name: Docker ECR and Terraform
 
 on:
   push:
