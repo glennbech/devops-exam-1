@@ -41,8 +41,7 @@ jobs:
       PREFIX: 2009
       AWS_ID: 244530008913
       IMAGE: 244530008913.dkr.ecr.eu-west-1.amazonaws.com/2009-jams:latest
-    
-    
+
     steps:
     - uses: actions/checkout@v3
     - name: setup terraform
