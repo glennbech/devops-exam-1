@@ -1,7 +1,8 @@
 name: SAM
 on:
   push:
-    
+
+
 defaults:
   run:
     working-directory: ./kjell
